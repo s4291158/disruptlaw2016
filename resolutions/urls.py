@@ -1,3 +1,7 @@
 from django.conf.urls import url
 
-urlpatterns = []
+from resolutions.views import ResolutionView
+
+urlpatterns = [
+    url(r'^resolve/$', ResolutionView.as_view(), name='resolutions_view'),
+]

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from signups.models import SignUp
+from home.models import SignUp
 
 
 class SignUpAdmin(admin.ModelAdmin):

@@ -2,7 +2,7 @@ from django.views import View
 from django.shortcuts import render
 from django.http import JsonResponse
 
-from signups.forms import LandingForm
+from home.forms import LandingForm
 
 
 class LandingView(View):
@@ -22,5 +22,9 @@ class LandingView(View):
         else:
             context['success'] = False
             context['message'] = "This email address has already been submited."
-
         return JsonResponse(context)
+
+
+class IndexView(View):
+    def get(self, request):
+        return render(request, 'index.html', {})

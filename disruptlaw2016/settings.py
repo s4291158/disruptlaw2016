@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'users',
     'disputes',
     'resolutions',
-    'signups',
+    'home',
 
     'allauth',
     'allauth.account',
