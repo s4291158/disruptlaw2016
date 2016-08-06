@@ -3,7 +3,20 @@ from django.contrib.auth.models import AbstractUser
 
 
 class BaseUser(AbstractUser):
-    pass
+    def is_user_type(self, attribute):
+        if hasattr(self, attribute):
+            return True
+        else:
+            return False
+
+    def is_graduate(self):
+        self.is_user_type('graduate')
+
+    def is_customer(self):
+        self.is_user_type('customer')
+
+    def is_specialist(self):
+        self.is_user_type('specialist')
 
 
 class Graduate(models.Model):
