@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %} {% include "head.html" %}
+
+<body>
+    <div class="container">
+        <hr/>
+        <div class="example">
+            <div class="row">
+                <div class="col-md-offset-3 col-md-6">
+                    <h2><p class="text-center">Disputes, resolved. Simple, Fast.</p></h2>
+                    <input type="text" id="email_txtbox" class="form-control" placeholder="Email"><br/>                    
+                    <button type="button" id="signup_button" class="btn btn-lg btn-info btn-block">Sign up now!</button>
+                    <div id="reply_div"></div>
+                </div>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div class="example">
+            <h2><p class="text-center">How does it work?</p></h2>
+            <div class="row">
+                <div class="col-md-offset-2 col-md-8">
+                    <div class="timeline">
+                        <dl>
+                            <dt>Start</dt>
+                            <dd class="pos-right clearfix">
+                                <div class="circ"></div>
+                                <div class="time">Day 1, 10:00</div>
+                                <div class="events">
+                                    <div class="pull-left">
+                                        <img width=50 class="events-object img-rounded" src="http://vignette4.wikia.nocookie.net/southpark/images/2/24/Jimmy_h-h-here.png/revision/latest?cb=20140821232918">
+                                    </div>
+                                    <div class="events-body">
+                                        <h4 class="events-heading">Jimmy</h4>
+                                        <p>Jimmy opens up a dispute ticket while providing supporting documents. Jimmy reffers his dispute ticket via a link to Timmy.</p>
+                                    </div>
+                                </div>
+                            </dd>
+                            <dd class="pos-left clearfix">
+                                <div class="circ"></div>
+                                <div class="time">Day 1, 10:05</div>
+                                <div class="events">
+                                    <div class="pull-left">
+                                        <img width=50 class="events-object img-rounded" src="http://vignette1.wikia.nocookie.net/southpark/images/4/4b/Timmy.png/revision/latest?cb=20140829152731">
+                                    </div>
+                                    <div class="events-body">
+                                        <h4 class="events-heading">Timmy</h4>
+                                        <p>Timmy accepts Jimmy's dispute ticket link, and provides his supporting documents.</p>
+                                    </div>
+                                </div>
+                            </dd>
+                            <dd class="pos-right clearfix">
+                                <div class="circ"></div>
+                                <div class="time">Day 1, 10:10 - 13:00</div>
+                                <div class="events">
+                                    <div class="pull-left">
+                                        <img class="events-object img-rounded" width=50 src="http://images.tvfanatic.com/iu/s--b21eUmUJ--/t_full/f_auto,fl_lossy,q_75/v1371142120/mr-mackey-picture.png">
+                                    </div>
+                                    <div class="events-body">
+                                        <h4 class="events-heading">Legal profession</h4>
+                                        <p>The dispute ticket is finalized and assigned to a legal profession to propose a contractually binding resolution. </p>
+                                    </div>
+                                </div>
+                            </dd>
+                            <dd class="pos-left clearfix">
+                                <div class="circ"></div>
+                                <div class="time">Day 1, 13:30</div>
+                                <div class="events">
+                                    <div class="events-body">
+                                        <h4 class="events-heading">Resolved!!</h4>
+                                        <p>A fair and just resolution is sent to both disputing parties and the dispute is resolved.</p>
+                                    </div>
+                                </div>
+                            </dd>
+                            <dt>End</dt>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+        </div>
+    </div>
+
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        $('#signup_button').click(function signup_email() {
+            var csrftoken = getCookie('csrftoken');
+            console.log(csrftoken);
+            $.ajax({
+                type: "POST",
+                url: "/landing",
+                data: {
+                    email: $("#email_txtbox").val(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function() {
+                    console.log('submitted!');
+                    var div_str = "Thank you for signing up!";
+                    $("#reply_div").html(div_str);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("Status: " + textStatus);
+                    console.log("Error: " + errorThrown);
+                }
+            });
+        })
+
+    </script>
+</body>
+
+</html>
