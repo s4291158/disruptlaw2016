@@ -11,3 +11,11 @@ class DisputeView(View):
             'user': request.user
         }
         return render(request, 'dispute.html', context)
+
+@method_decorator(login_required, name='dispatch')
+class DisputeListView(View):
+    def get(self, request):
+        context = {
+            'user': request.user
+        }
+        return render(request, 'dispute_list.html', context)
