@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %} {% include "head.html" %}
+
+<body>
+    <!-- Header -->
+    {% include "headers.html" %}
+
+    <!-- Body -->
+
+    <!-- person 2 dispute -->
+    <div class="container documents">
+        <div class="example">
+            <hr/>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel-body">
+                        <p class="lead">
+                            Please submit relevant information for your dispute, Timmy
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row-fluid">
+            <div class="col-md-offset-3 col-md-6">
+                <p class="text-center"><strong>Dispute Category</strong></p>
+
+                <p>
+                    <select id="category_selector" name="selecter_basic" class="selecter_1">
+                        <optgroup label="Crime">
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </optgroup>
+                        <optgroup label="Family">
+                            <option value="4">Four</option>
+                            <option value="5">Five</option>
+                            <option value="6">Six</option>
+                            <option value="7">Seven</option>
+                        </optgroup>
+                        <optgroup label="Insurance">
+                            <option value="8">Eight</option>
+                            <option value="9">Nine</option>
+                            <option value="10">Ten</option>
+                        </optgroup>
+                    </select>
+                </p>
+
+                <div id="category_selected_content" class="collapse">
+                    
+                </div>
+
+                <button type="button" class="btn btn-block" onclick="next()">Next</button>
+
+                <div id="dispute_page_two" class="well hidden">
+                    <p><span class="btn btn-block btn-default btn-file">Browse<input type="file"></span></p>
+                    <p><textarea placeholder="Extra info" class="form-control" rows="2"></textarea></p>
+                    <button type="button" class="btn btn-block">Submit</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <hr/>
+        </div>
+    </div>
+
+    <script>
+        $("#category_selector").change(function (){            
+            var selected_cat = $(this).val();
+            
+            var my_div = '<div class="container"><p><button type="button" class="btn btn-block">' + selected_cat + '</button></p></div>';
+            
+            if(selected_cat == 1){
+                $("#category_selected_content").text("one");
+            }
+            
+            else if (selected_cat == 2){
+                $("#category_selected_content").text("two");
+            }
+            
+            else{
+                $("#category_selected_content").html(my_div);
+            }
+            
+            $('#category_selected_content').collapse("show");
+        })
+
+    </script>    
+
+    <!-- Footer -->
+    {% include "footer.html" %}
+</body>
+
+
+</html>
