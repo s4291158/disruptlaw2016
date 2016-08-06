@@ -1,5 +1,7 @@
 from django.db import models
 
+from resolutions.states_table import STATES
+
 
 class Resolution(models.Model):
     dispute = models.ForeignKey(
@@ -7,29 +9,50 @@ class Resolution(models.Model):
         on_delete=models.CASCADE
     )
 
-    graduate_set = models.ManyToManyField(
+    graduate = models.ForeignKey(
         'users.Graduate',
     )
 
-    specialist = models.ForeignKey(
-        'users.Specialist',
-        null=True,
-        blank=True
+    time_created = models.DateTimeField(auto_now_add=True)
+    state = models.IntegerField(
+        choices=STATES,
+        default=1
     )
 
-    time_created = models.DateTimeField(auto_now_add=True)
 
-    def is_supervised(self):
-        if self.specialist:
-            return True
-        else:
-            return False
-
-
-class ResolutionDocuments(models.Model):
+class ResolutionProposal(models.Model):
     resolution = models.OneToOneField(
         'Resolution',
         on_delete=models.CASCADE
     )
 
     file = models.FileField(upload_to='uploads/')
+    time_created = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def graduate(self):
+        return self.resolution.graduate
+
+    def save(self, **kwargs):
+        super(self.__class__, self).save(**kwargs)
+        self.resolution.state = 2
+        self.resolution.save()
+
+
+class ResolutionResolve(models.Model):
+    resolution = models.OneToOneField(
+        'Resolution',
+        on_delete=models.CASCADE
+    )
+
+    specialist = models.ForeignKey(
+        'users.Specialist'
+    )
+
+    def save(self, **kwargs):
+        super(self.__class__, self).save(**kwargs)
+        self.resolution.state = 3
+        self.resolution.save()
+
+    file = models.FileField(upload_to='upload/')
+    time_created = models.DateTimeField(auto_now_add=True)
