@@ -17,3 +17,24 @@ class Dispute(models.Model):
     title = models.CharField(max_length=40)
     text = models.TextField()
     times_created = models.DateTimeField(auto_now_add=True)
+
+
+class DisputeMaterial(models.Model):
+    dispute = models.ForeignKey(
+        'Dispute',
+        on_delete=models.CASCADE
+    )
+
+    customer = models.ForeignKey(
+        'users.Customer',
+        on_delete=models.CASCADE
+    )
+
+
+class DisputeDocument(models.Model):
+    dispute_material = models.ForeignKey(
+        'DisputeMaterial',
+        on_delete=models.CASCADE
+    )
+
+    file = models.FileField(upload_to='uploads/')
