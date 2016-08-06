@@ -8,15 +8,14 @@
     <div class="example">
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
-                <form method='post' action="">
+                <form id="landing_form">
                     {% csrf_token %}
                     <h2><p class="text-center">Disputes, resolved. Simple, fast, online.</p></h2>
                     <input type="email" id="id_email" name="email" class="form-control" placeholder="Email"><br/>
-                    <button type="submit" id="signup_button" class="btn btn-lg btn-info btn-block">Sign up now!</button>
+                    <div id="landing_response" class="collapse"></div>
+                    <button id="signup_button" class="btn btn-lg btn-info btn-block">Sign up now!</button>
                 </form>
-                {% if message %}
-                    <p>{{ message }}</p>
-                {% endif %}
+                </div>
             </div>
         </div>
     </div>
@@ -96,46 +95,34 @@
 </div>
 
 <script>
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
+    $(document).ready(function () {
+        $("#landing_form").submit(function (event) {
+            event.preventDefault();
 
-    $('#signup_button').click(function signup_email() {
-        var csrftoken = getCookie('csrftoken');
-        console.log(csrftoken);
-        $.ajax({
-            type: "POST",
-            url: "/landing",
-            data: {
-                email: $("#email_txtbox").val(),
-                csrfmiddlewaretoken: '{{ csrf_token }}'
-            },
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function () {
-                console.log('submitted!');
-                var div_str = "Thank you for signing up!";
-                $("#reply_div").html(div_str);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Status: " + textStatus);
-                console.log("Error: " + errorThrown);
-            }
+            var data = $('#landing_form').serialize();
+
+            $.ajax({
+                url: '',
+                type: 'post',
+                data: data,
+                success: function (data) {
+                    var my_var_string = "<strong>";
+
+                    if (data['success'] == true){
+                        my_var_string += "<span style='color: #37BC9B'>"
+                    }
+                    else{
+                        my_var_string += "<span style='color: #ED5565'>"
+                    }
+
+                    my_var_string += "<p class='text-center'>" + data["message"] + "</p></span></strong>";
+
+                    $("#landing_response").html(my_var_string);
+                    $("#landing_response").collapse("show");
+                }
+            });
         });
     })
-
 </script>
 {% include 'tracking.html' %}
 </body>
