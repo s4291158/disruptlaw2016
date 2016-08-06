@@ -19,6 +19,12 @@ class Resolution(models.Model):
 
     time_created = models.DateTimeField(auto_now_add=True)
 
+    def is_supervised(self):
+        if self.specialist:
+            return True
+        else:
+            return False
+
 
 class ResolutionDocuments(models.Model):
     resolution = models.OneToOneField(
