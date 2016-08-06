@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('users', '0001_initial'),
-        ('forum', '0001_initial'),
+        ('disputes', '0001_initial'),
     ]
 
     operations = [
@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='comment',
             name='question',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='forum.Question'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='disputes.Question'),
         ),
         migrations.AddField(
             model_name='comment',

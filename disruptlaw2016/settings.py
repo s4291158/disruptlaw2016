@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'users',
-    'forum',
+    'disputes',
 
     'allauth',
     'allauth.account',
