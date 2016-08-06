@@ -18,6 +18,12 @@ class Dispute(models.Model):
     text = models.TextField()
     times_created = models.DateTimeField(auto_now_add=True)
 
+    def is_assigned(self):
+        if self.graduate_set.all().count() > 0:
+            return True
+        else:
+            return False
+
 
 class DisputeMaterial(models.Model):
     dispute = models.ForeignKey(
