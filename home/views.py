@@ -1,7 +1,7 @@
 from django.views import View
 from django.shortcuts import render
 
-from signups.forms import LandingForm
+from home.forms import LandingForm
 
 
 class LandingView(View):
@@ -21,3 +21,8 @@ class LandingView(View):
             context['message'] = "This email address has already been submited."
 
         return render(request, 'landing.html', context)
+
+
+class IndexView(View):
+    def get(self, request):
+        return render(request, 'index.html', {})

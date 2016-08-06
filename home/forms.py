@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 
-from signups.models import SignUp
+from home.models import SignUp
 
 
 class LandingForm(ModelForm):

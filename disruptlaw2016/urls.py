@@ -21,6 +21,6 @@ urlpatterns = [
     url(r'^', include('users.urls')),
     url(r'^', include('disputes.urls')),
     url(r'^', include('resolutions.urls')),
-    url(r'^', include('signups.urls')),
+    url(r'^', include('home.urls')),
     url(r'^accounts/', include('allauth.urls')),
 ]

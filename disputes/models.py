@@ -25,14 +25,9 @@ class Dispute(models.Model):
         default=1
     )
 
-    def finalise(self, customer2):
-        self.customer2 = customer2
-        self.state = 3
-        self.save()
-
 
 class DisputeMaterial(models.Model):
-    dispute = models.ForeignKey(
+    dispute = models.OneToOneField(
         'Dispute',
         on_delete=models.CASCADE
     )
@@ -55,11 +50,3 @@ class DisputeDocument(models.Model):
     )
 
     file = models.FileField(upload_to='uploads/')
-
-    def save(self, **kwargs):
-        super(self.__class__, self).save(**kwargs)
-        conditions = [
-            self.dispute_material.dispute.customer1 ==
-            self.dispute_material.customer
-
-        ]

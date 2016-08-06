@@ -29,15 +29,6 @@ class ResolutionProposal(models.Model):
     file = models.FileField(upload_to='uploads/')
     time_created = models.DateTimeField(auto_now_add=True)
 
-    @property
-    def graduate(self):
-        return self.resolution.graduate
-
-    def save(self, **kwargs):
-        super(self.__class__, self).save(**kwargs)
-        self.resolution.state = 2
-        self.resolution.save()
-
 
 class ResolutionResolve(models.Model):
     resolution = models.OneToOneField(
@@ -48,11 +39,6 @@ class ResolutionResolve(models.Model):
     specialist = models.ForeignKey(
         'users.Specialist'
     )
-
-    def save(self, **kwargs):
-        super(self.__class__, self).save(**kwargs)
-        self.resolution.state = 3
-        self.resolution.save()
 
     file = models.FileField(upload_to='upload/')
     time_created = models.DateTimeField(auto_now_add=True)
