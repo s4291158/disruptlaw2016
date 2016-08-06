@@ -33,23 +33,9 @@
 
                 <p>
                     <select id="category_selector" name="category_selector" class="selecter_1">
-                        <option selected disabled>Choose here</option>
-                        <optgroup label="Crime">
-                            <option value="1">Murder</option>
-                            <option value="2">Homocide</option>
-                            <option value="3">Suicide</option>
-                        </optgroup>
-                        <optgroup label="Family">
-                            <option value="4">Elderly</option>
-                            <option value="5">Children</option>
-                            <option value="6">Partner</option>
-                            <option value="7">Divorce</option>
-                        </optgroup>
-                        <optgroup label="Insurance">
-                            <option value="8">Death</option>
-                            <option value="9">Famous</option>
-                            <option value="10">Popcorn</option>
-                        </optgroup>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.category }}</option>
+                        {% endfor %}
                     </select>
                 </p>
 

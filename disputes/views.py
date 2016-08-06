@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from disputes.models import Dispute
+from disputes.category_questions import category_questions
 
 
 @method_decorator(login_required, name='dispatch')
@@ -28,5 +29,6 @@ class CreateDisputeView(View):
     def get(self, request):
         context = {
             'user': request.user,
+            'categories': category_questions
         }
         return render(request, 'create_dispute.html', context)

@@ -11,17 +11,17 @@
                         src="http://image.flaticon.com/icons/svg/66/66236.svg" height="40"></a>
             </div>
             <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-left">
-                    <li><a class="nav-link" href="{% url 'dispute_view' %}">Dispute</a></li>
-                    <li><a class="nav-link" href="{% url 'resolutions_view' %}">Resolve</a></li>
-                </ul>
+                {#                <ul class="nav navbar-nav navbar-left">#}
+                {#                    <li><a class="nav-link" href="{% url 'creadispute_view' %}">Dispute</a></li>#}
+                {#                    <li><a class="nav-link" href="{% url 'resolutions_view' %}">Resolve</a></li>#}
+                {#                </ul>#}
 
                 <ul class="nav navbar-nav navbar-right">
-                    {% if user %}
+                    {% if user.is_authenticated %}
                         <li><a href="#">{{ user.email }}</a></li>
+                        <li><a href="{% url 'account_logout' %}">Log out</a></li>
                     {% else %}
-                        <li><a href="#">Sign Up</a></li>
-                        <li><a href="#">Login</a></li>
+                        <li><a href="{% url 'admin:login' %}?next=/">Login</a></li>
                     {% endif %}
                 </ul>
             </div>
