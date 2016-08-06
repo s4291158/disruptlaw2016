@@ -1,7 +1,8 @@
 from django.db import models
-from disputes.states_table import STATES
+from django.db.utils import IntegrityError
 
-from disputes.category_model import DisputeCategory, DisputeCategoryQuestion
+from disputes.states_table import STATES
+from disputes.category_questions import category_choices
 
 import random
 
@@ -22,7 +23,6 @@ class Dispute(models.Model):
     )
 
     alt_id = models.IntegerField(
-        default=0,
         unique=True
     )
     title = models.CharField(
@@ -35,6 +35,10 @@ class Dispute(models.Model):
         default=1
     )
 
+    category = models.IntegerField(
+        choices=category_choices
+    )
+
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.make_alt_id()
@@ -44,10 +48,13 @@ class Dispute(models.Model):
         lower = 10 ** (length - 1)
         upper = 10 ** length - 1
 
-        alt_id = random.randint(lower, upper)
-        while self.objects.filter(alt_id=alt_id).count() > 0:
-            alt_id = random.randint(lower, upper)
-        self.alt_id = alt_id
+        while True:
+            self.alt_id = random.randint(lower, upper)
+            try:
+                self.save()
+                break
+            except IntegrityError:
+                pass
 
 
 class DisputeMaterial(models.Model):
@@ -74,3 +81,13 @@ class DisputeDocument(models.Model):
     )
 
     file = models.FileField(upload_to='uploads/')
+
+
+class DisputeQNA(models.Model):
+    dispute_material = models.ForeignKey(
+        'DisputeMaterial',
+        on_delete=models.CASCADE
+    )
+
+    question = models.TextField()
+    answer = models.TextField()
