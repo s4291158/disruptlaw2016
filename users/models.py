@@ -18,3 +18,10 @@ class Customer(models.Model):
         'BaseUser',
         on_delete=models.CASCADE
     )
+
+
+class Lawyer(models.Model):
+    baseuser = models.OneToOneField(
+        'BaseUser',
+        on_delete=models.CASCADE
+    )
