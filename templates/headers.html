@@ -4,19 +4,22 @@
     <nav class="navbar navbar-default navbar-custom" role="navigation">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-                <a class="navbar-brand" href="index.html"><img src="http://image.flaticon.com/icons/svg/66/66236.svg" height="40"></a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span
+                        class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
+                        class="icon-bar"></span> <span class="icon-bar"></span></button>
+                <a class="navbar-brand" href="{% url 'index_view' %}"><img
+                        src="http://image.flaticon.com/icons/svg/66/66236.svg" height="40"></a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-left">
-                    <li><a class="nav-link" href="getting-started.html">Dispute</a></li>
-                    <li><a class="nav-link" href="getting-started.html">Resolve</a></li>                                        
+                    <li><a class="nav-link" href="{% url 'dispute_view' %}">Dispute</a></li>
+                    <li><a class="nav-link" href="{% url 'resolutions_view' %}">Resolve</a></li>
                 </ul>
-                
+
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#">Sign Up</a></li>
                     <li><a href="#">Login</a></li>
-                </ul>                
+                </ul>
             </div>
         </div>
     </nav>
