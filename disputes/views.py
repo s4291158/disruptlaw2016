@@ -10,6 +10,8 @@ from django.utils.decorators import method_decorator
 from disputes.models import Dispute
 from disputes.category_questions import category_questions
 
+from model_mommy import mommy
+
 
 @method_decorator(login_required, name='dispatch')
 class DisputeView2(View):
@@ -22,6 +24,20 @@ class DisputeView2(View):
             context['second_view'] = True
 
         return render(request, 'dispute2.html', context)
+
+    def post(self, request):
+        dispute = mommy.make(
+            'Dispute',
+            customer1=mommy.make(
+                'Customer',
+                baseuser=request.user
+            )
+        )
+
+        context = {
+            'dispute_alt_id': str(dispute.alt_id),
+        }
+        return JsonResponse(context)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -51,7 +67,7 @@ class CreateDisputeView(View):
         return render(request, 'create_dispute.html', context)
 
     def post(self, request, alt_id=None):
-        #cat_id = request.POST['category_id'][0]
+        # cat_id = request.POST['category_id'][0]
 
         # Save your json stuff
         print(request.POST)

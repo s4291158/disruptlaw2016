@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "category": "Crime",
+    "category": "Crime (with demo questions)",
     "questions": [
       {
         "question": "Harvey Dent, can we trust him?"
@@ -13,7 +13,7 @@
   },
   {
     "id": 2,
-    "category": "Family",
+    "category": "Family (with demo questions)",
     "questions": [
       {
         "question": "Where does Walter hide his money?"

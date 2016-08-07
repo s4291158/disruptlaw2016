@@ -28,18 +28,20 @@
 <div class="container">
     <div class="row-fluid">
         <div class="col-md-6" style="padding-right:20px; border-right: 1px solid #ccc;">
-            {% csrf_token %}
-            <p class="text-center"><strong>{% if second_view %}Jimmy{% else %} Timmy {% endif %}, please submit your documents</strong></p><br/>
-            <p><span class="btn btn-block btn-default btn-file">Browse<input type="file"></span></p>
-            <p><textarea placeholder="Extra info" class="form-control" rows="2"></textarea></p>
-            <button id="next_button" type="button" class="btn btn-block">Submit</button>
+            <form id="material-form" action="">
+                {% csrf_token %}
+                <p class="text-center"><strong>{{ user.username }}, please submit your documents</strong></p><br/>
+                <p><span class="btn btn-block btn-default btn-file">Browse<input type="file"></span></p>
+                <p><textarea placeholder="Extra info" class="form-control" rows="2"></textarea></p>
+                <button id="material_submit" type="button" class="btn btn-block btn-primary">Submit</button>
+            </form>
         </div>
 
         <div class="col-md-6">
             {% if second_view %}
                 <p class="text-center"><strong>Timmy</strong></p>
                 <p class="text-center">Timmy has submitted his documents<span class="glyphicon glyphicon-ok"></span></p>
-            {%  else %}
+            {% else %}
                 <p class="text-center"><strong>Other Dispute Party</strong></p>
                 <p class="text-center">You will receive a link to forward to the other party.</p>
             {% endif %}
@@ -69,14 +71,14 @@
                 </div>
 
                 <div id="unique_link_div" class="collapse">
-                    <input type="text" class="form-control"
-                           value="/dispute/44214" placeholder="Some path" id="copy-input">
-                    <span class="input-group-btn"><button class="btn btn-default" type="button" id="copy-button"
-                                                          data-toggle="tooltip" data-placement="button"
-                                                          title="Copy to Clipboard">Copy</button></span>
+                    <input type="text" class="form-control" placeholder="Some path" id="copy-input">
+
                 </div>
             </div>
             <div class="modal-footer">
+                <button class="btn btn-warning" type="button" id="copy-button" data-toggle="tooltip"
+                        data-placement="button" title="Copy to Clipboard">Copy
+                </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -88,14 +90,26 @@
 {% include "footer.html" %}
 
 <script>
-    $("#next_button").click(function () {
-        $('#myModal').modal({
-            show: 'true'
+    $("#material_submit").click(function () {
+        var data = $("#material-form").serialize();
+
+        $.ajax({
+            url: '',
+            type: 'post',
+            data: data,
+            success: function (data) {
+                var url = "http://outlawresolutions.site/dispute/" + data['dispute_alt_id']
+                $('#copy-input').val(url);
+                $('#myModal').modal({
+                    show: 'true'
+                });
+
+                $("#pre_unique_link_div").collapse('hide');
+                $("#unique_link_div").collapse('show');
+            }
         });
 
-        $("#pre_unique_link_div").collapse('hide');
-        $("#unique_link_div").collapse('show');
-    })
+    });
 
     $('#copy-button').bind('click', function () {
         var input = document.querySelector('#copy-input');

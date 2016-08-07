@@ -7,6 +7,16 @@ from disputes.category_questions import category_choices
 import random
 
 
+def make_alt_id(length=8):
+    lower = 10 ** (length - 1)
+    upper = 10 ** length - 1
+
+    while True:
+        alt_id = random.randint(lower, upper)
+        if Dispute.objects.filter(alt_id=alt_id).count() == 0:
+            return alt_id
+
+
 class Dispute(models.Model):
     customer1 = models.ForeignKey(
         'users.Customer',
@@ -23,7 +33,8 @@ class Dispute(models.Model):
     )
 
     alt_id = models.IntegerField(
-        unique=True
+        unique=True,
+        default=make_alt_id
     )
     title = models.CharField(
         max_length=40,
@@ -39,22 +50,8 @@ class Dispute(models.Model):
         choices=category_choices
     )
 
-    def __init__(self, *args, **kwargs):
-        super(self.__class__, self).__init__(*args, **kwargs)
-        self.make_alt_id()
-        self.title = str(self.alt_id)
-
-    def make_alt_id(self, length=8):
-        lower = 10 ** (length - 1)
-        upper = 10 ** length - 1
-
-        while True:
-            self.alt_id = random.randint(lower, upper)
-            try:
-                self.save()
-                break
-            except IntegrityError:
-                pass
+    def __str__(self):
+        return self.alt_id
 
 
 class DisputeMaterial(models.Model):
