@@ -33,7 +33,7 @@
                 <p class="text-center"><strong>Dispute Category</strong></p>
 
                 <p>
-                    <select id="category_selector" name="category_selector" class="selecter_1">
+                    <select id="category_id" name="category_selector" class="selecter_1">
                         {% for category in categories %}
                             <option value="{{ category.id }}">{{ category.category }}</option>
                         {% endfor %}
@@ -65,8 +65,6 @@
 <script>
     $("#next_button").click(function (){
         var data = $("#category_form").serialize();
-
-        data += "&finish=1";
 
         $.ajax({
             url: '',
