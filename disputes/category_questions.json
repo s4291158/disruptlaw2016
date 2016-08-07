@@ -4,10 +4,10 @@
     "category": "Crime",
     "questions": [
       {
-        "question": "q1-cat1"
+        "question": "Harvey Dent, can we trust him?"
       },
       {
-        "question": "q2-cat1"
+        "question": "Did they make you an offer you couldn't refuse?"
       }
     ]
   },
@@ -16,10 +16,10 @@
     "category": "Family",
     "questions": [
       {
-        "question": "q1-cat2"
+        "question": "Where does Walter hide his money?"
       },
       {
-        "question": "q2-cat2"
+        "question": "Describe the Lannister family in a sentence."
       }
     ]
   }
