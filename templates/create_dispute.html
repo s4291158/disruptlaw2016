@@ -34,6 +34,7 @@
 
                 <p>
                     <select id="category_id" name="category_selector" class="selecter_1">
+                        <option selected disabled>Choose one</option>
                         {% for category in categories %}
                             <option value="{{ category.id }}">{{ category.category }}</option>
                         {% endfor %}
@@ -44,7 +45,7 @@
 
                 </div>
 
-                <button id="next_button" type="button" class="btn btn-block">Next</button>
+                <button id="next_button" type="button" class="btn btn-block" disabled>Next</button>
 
                 <div id="dispute_page_two" class="well hidden">
                     <p><span class="btn btn-block btn-default btn-file">Browse<input type="file"></span></p>
@@ -63,7 +64,7 @@
 </div>
 
 <script>
-    $("#next_button").click(function (){
+    $("#next_button").click(function () {
         var data = $("#category_form").serialize();
 
         $.ajax({
@@ -74,25 +75,27 @@
                 window.location = '../dispute2/';
             }
         });
-    })
+    });
 
-    $("#category_selector").change(function () {
-        var data = $("#category_form").serialize();
-
-        $.ajax({
-            url: '',
-            type: 'post',
-            data: data,
-            success: function (data) {
-                var div_str = '';
-                jQuery.each(data['questions'], function(i, val){
-                    div_str += '<p><span style="padding-left: 10px">' + (val['question']) + '</span><input type="text" name="answer_' + val['question'] + '" class="form-control" placeholder=""></p>';
-                });
-                $("#category_selected_content").html(div_str);
-                $("#category_selected_content").collapse('show');
-            }
+    $("#category_id").change(function () {
+        if ($("#category_id").val() == null) {
+            $("#next_button").prop("disabled", true);
+        } else {
+            $("#next_button").prop("disabled", false);
+        }
+        var categories_data = {{ categories|safe }};
+        var category_data = $.grep(categories_data, function (element, index) {
+            return element.id == $("#category_id").val();
+        })[0];
+        var div_str = '';
+        jQuery.each(category_data.questions, function (i, val) {
+            div_str += '<p><span style="padding-left: 10px">' + (val['question']) + '</span><input type="text" name="answer_' + val['question'] + '" class="form-control" placeholder=""></p>';
         });
-    })
+        $("#category_selected_content").html(div_str);
+        $("#category_selected_content").collapse('show');
+
+    });
+
 
 </script>
 
