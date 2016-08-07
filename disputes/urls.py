@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from disputes.views import DisputeView, CreateDisputeView
+from disputes.views import DisputeView, CreateDisputeView, DisputeView2
 
 urlpatterns = [
     url(
@@ -13,8 +13,13 @@ urlpatterns = [
         name='dispute_view'
     ),
     url(
+        r'^dispute2/?$',
+        DisputeView2.as_view(),
+        name='dispute2_view'
+    ),
+    url(
         r'^disputes/?$',
         DisputeView.as_view(),
-        name='dispute_view'
+        name='disputes_view'
     ),
 ]

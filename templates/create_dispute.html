@@ -29,6 +29,7 @@
     <div class="row-fluid">
         <div class="col-md-offset-3 col-md-6">
             <form id="category_form" role="form">
+                {% csrf_token %}
                 <p class="text-center"><strong>Dispute Category</strong></p>
 
                 <p>
@@ -53,37 +54,6 @@
             </form>
         </div>
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Generating your unique link... </h4>
-                </div>
-                <div class="modal-body">
-                    <div id="pre_unique_link_div" class="collapse">
-                        <div class="loader"></div>
-                    </div>
-
-                    <div id="unique_link_div" class="collapse">
-                        <input type="text" class="form-control"
-                               value="/path/to/foo/bar" placeholder="Some path" id="copy-input">
-                        <span class="input-group-btn"><button class="btn btn-default" type="button" id="copy-button"
-                                                              data-toggle="tooltip" data-placement="button"
-                                                              title="Copy to Clipboard">Copy</button></span>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
 </div>
 
 <div class="container">
@@ -93,61 +63,35 @@
 </div>
 
 <script>
+    $("#next_button").click(function (){
+        var data = $("#category_form").serialize();
 
-    $(document).ready(function () {
-        $('#copy-button').tooltip();
-        $('#pre_unique_link_div').collapse('show');
-
-        $("#next_button").click(function () {
-            $('#myModal').modal('show');
-
-
-            event.preventDefault();
-
-            var data = $("#category_form").serialize();
-
-            $.ajax({
-                url: '',
-                type: 'post',
-                data: data,
-                success: function (data) {
-                    console.log(data)
-                }
-            });
-
-        });
-    })
-
-    $('#copy-button').bind('click', function () {
-        var input = document.querySelector('#copy-input');
-        input.setSelectionRange(0, input.value.length + 1);
-        try {
-            var success = document.execCommand('copy');
-            if (success) {
-                // Change tooltip message to "Copied!"
-            } else {
-                // Handle error. Perhaps change tooltip message to tell user to use Ctrl-c
-                // instead.
-            }
-        } catch (err) {
-            // Handle error. Perhaps change tooltip message to tell user to use Ctrl-c
-            // instead.
-        }
-    });
-
-
-    $("#category_selector").change(function () {
-        var data = JSON.stringify(jQuery('#category_form').serializeArray());
-
-        console.log(data);
-        console.log('yeah');
+        data += "&finish=1";
 
         $.ajax({
             url: '',
             type: 'post',
             data: data,
             success: function (data) {
-                console.log(data)
+                window.location = '../dispute2/';
+            }
+        });
+    })
+
+    $("#category_selector").change(function () {
+        var data = $("#category_form").serialize();
+
+        $.ajax({
+            url: '',
+            type: 'post',
+            data: data,
+            success: function (data) {
+                var div_str = '';
+                jQuery.each(data['questions'], function(i, val){
+                    div_str += '<p><span style="padding-left: 10px">' + (val['question']) + '</span><input type="text" name="answer_' + val['question'] + '" class="form-control" placeholder=""></p>';
+                });
+                $("#category_selected_content").html(div_str);
+                $("#category_selected_content").collapse('show');
             }
         });
     })
