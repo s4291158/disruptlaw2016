@@ -9,7 +9,7 @@ urlpatterns = [
     ),
     url(
         r'^dispute/(?P<alt_id>[0-9]+)/?$',
-        DisputeView.as_view(),
+        CreateDisputeView.as_view(),
         name='dispute_view'
     ),
     url(
@@ -18,7 +18,7 @@ urlpatterns = [
         name='dispute2_view'
     ),
     url(
-        r'^disputes/?$',
+        r'^disputes/(?P<alt_id>[0-9]+)/?$',
         DisputeView.as_view(),
         name='disputes_view'
     ),
