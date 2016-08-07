@@ -21,7 +21,7 @@
                         <li><a href="#">{{ user.email }}</a></li>
                         <li><a href="{% url 'account_logout' %}">Log out</a></li>
                     {% else %}
-                        <li><a href="{% url 'admin:login' %}?next=/">Login</a></li>
+                        <li><a href="{% url 'account_login' %}">Login</a></li>
                     {% endif %}
                 </ul>
             </div>
