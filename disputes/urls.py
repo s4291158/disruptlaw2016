@@ -22,4 +22,9 @@ urlpatterns = [
         DisputeView.as_view(),
         name='disputes_view'
     ),
+    url(
+        r'^dispute2/(?P<alt_id>[0-9]+)/?$',
+        DisputeView2.as_view(),
+        name='dispute_view'
+    ),
 ]

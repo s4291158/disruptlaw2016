@@ -13,7 +13,7 @@ from disputes.category_questions import category_questions
 
 @method_decorator(login_required, name='dispatch')
 class DisputeView2(View):
-    def get(self, request):
+    def get(self, request, alt_id=None):
         context = {
             'user': request.user
         }
