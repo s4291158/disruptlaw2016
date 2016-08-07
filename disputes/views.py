@@ -7,6 +7,8 @@ from django.utils.decorators import method_decorator
 from disputes.models import Dispute
 from disputes.category_questions import category_questions
 
+import json
+
 
 @method_decorator(login_required, name='dispatch')
 class DisputeView(View):
@@ -32,3 +34,9 @@ class CreateDisputeView(View):
             'categories': category_questions
         }
         return render(request, 'create_dispute.html', context)
+
+    def post(self, request):
+        json_data = json.loads(request.body)
+        print(json_data)
+        data = json_data['data']
+
