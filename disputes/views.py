@@ -15,8 +15,11 @@ from disputes.category_questions import category_questions
 class DisputeView2(View):
     def get(self, request, alt_id=None):
         context = {
-            'user': request.user
+            'user': request.user,
         }
+
+        if alt_id:
+            context['second_view'] = True
 
         return render(request, 'dispute2.html', context)
 
@@ -28,6 +31,7 @@ class DisputeView(View):
             'user': request.user
         }
         if alt_id:
+            context['second_view'] = True
             try:
                 context['dispute'] = Dispute.objects.get(alt_id=alt_id)
             except Dispute.DoesNotExist:

@@ -16,7 +16,7 @@
             <div class="col-md-12">
                 <div class="panel-body">
                     <p class="lead">
-                        Please submit relevant information for your dispute between you and Timmy
+                        Please submit relevant information for your dispute
                     </p>
                 </div>
             </div>
@@ -29,15 +29,20 @@
     <div class="row-fluid">
         <div class="col-md-6" style="padding-right:20px; border-right: 1px solid #ccc;">
             {% csrf_token %}
-            <p class="text-center"><strong>Jimmy, please submit your documents</strong></p><br/>
+            <p class="text-center"><strong>{% if second_view %}Jimmy{% else %} Timmy {% endif %}, please submit your documents</strong></p><br/>
             <p><span class="btn btn-block btn-default btn-file">Browse<input type="file"></span></p>
             <p><textarea placeholder="Extra info" class="form-control" rows="2"></textarea></p>
             <button id="next_button" type="button" class="btn btn-block">Submit</button>
         </div>
 
         <div class="col-md-6">
-            <p class="text-center"><strong>Timmy</strong></p>
-            <p class="text-center">Timmy has submitted his documents<span class="glyphicon glyphicon-ok"></span></p>
+            {% if second_view %}
+                <p class="text-center"><strong>Timmy</strong></p>
+                <p class="text-center">Timmy has submitted his documents<span class="glyphicon glyphicon-ok"></span></p>
+            {%  else %}
+                <p class="text-center"><strong>Disputer</strong></p>
+                <p class="text-center">The other person has yet to submit anything...</p>
+            {% endif %}
         </div>
     </div>
 </div>
