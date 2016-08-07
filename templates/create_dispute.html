@@ -32,20 +32,20 @@
                 {% csrf_token %}
                 <p class="text-center"><strong>Dispute Category</strong></p>
 
-                <p>
+                <div class="categories_div">
                     <select id="category_id" name="category_selector" class="selecter_1">
                         <option selected disabled>Choose one</option>
                         {% for category in categories %}
                             <option value="{{ category.id }}">{{ category.category }}</option>
                         {% endfor %}
                     </select>
-                </p>
+                </div>
 
-                <div id="category_selected_content" class="collapse">
+                <div id="category_selected_content" class="collapse qanda_div">
 
                 </div>
 
-                <button id="next_button" type="button" class="btn btn-block" disabled>Next</button>
+                <button id="next_button" type="button" class="btn btn-block btn-primary" disabled>Next</button>
 
                 <div id="dispute_page_two" class="well hidden">
                     <p><span class="btn btn-block btn-default btn-file">Browse<input type="file"></span></p>
